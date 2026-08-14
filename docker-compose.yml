@@ -15,7 +15,6 @@ services:
       interval: 5s
       timeout: 5s
       retries: 20
-    mem_limit: 256m
 
   core:
     image: melnikovit/dj-kvm:latest
@@ -24,70 +23,12 @@ services:
       - "${DJKVM_PORT:-8089}:8080"
     environment:
       DATABASE_URL: postgres://djkvm:${POSTGRES_PASSWORD:-djkvm_secret_pass}@db:5432/djkvm?sslmode=disable
-      ADMIN_USER: ${ADMIN_USER:-admin}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin123}
-      JWT_SECRET: ${JWT_SECRET:-change_this_jwt_secret_in_production}
-      DJKVM_SECRETS_KEY: ${DJKVM_SECRETS_KEY:-change_this_32b_secrets_key_prod}
-      LISTEN_ADDR: ":8080"
-      STATIC_DIR: /app/web
-      PUBLIC_URL: ${PUBLIC_URL:-http://127.0.0.1:8089}
-      BACKUP_DIR: /var/lib/dj-kvm/backups
-      GRAFANA_URL: ${GRAFANA_URL:-http://127.0.0.1:3001}
-      PROMETHEUS_URL: ${PROMETHEUS_URL:-http://127.0.0.1:9091}
-      PROMETHEUS_SD_DIR: /etc/prometheus/file_sd
-      PROMETHEUS_RELOAD_URL: http://prometheus:9090/-/reload
-      PROMETHEUS_CORE_SCRAPE: ${PROMETHEUS_CORE_SCRAPE:-core:8080}
-      AGENT_DIST_DIR: /opt/dj-kvm/dist
-      AGENT_VERSION: ${AGENT_VERSION:-auto}
-      MAX_AGENTS: ${MAX_AGENTS:-10000}
-    volumes:
-      - djkvm_backups:/var/lib/dj-kvm/backups
-      - ./prometheus/file_sd:/etc/prometheus/file_sd
+      JWT_SECRET: ${JWT_SECRET:-change_this_secret_key_in_production}
+      DJKVM_SECRETS_KEY: ${DJKVM_SECRETS_KEY:-change_this_encryption_key_in_production}
     depends_on:
       db:
         condition: service_healthy
-      prometheus:
-        condition: service_started
-    mem_limit: 512m
-
-  prometheus:
-    image: prom/prometheus:v2.54.1
-    restart: unless-stopped
-    command:
-      - --config.file=/etc/prometheus/prometheus.yml
-      - --storage.tsdb.path=/prometheus
-      - --storage.tsdb.retention.time=15d
-      - --web.enable-lifecycle
-    ports:
-      - "${PROMETHEUS_PORT:-9091}:9090"
-    volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-      - ./prometheus/rules:/etc/prometheus/rules:ro
-      - ./prometheus/file_sd:/etc/prometheus/file_sd
-      - djkvm_prometheus_data:/prometheus
-    mem_limit: 512m
-
-  grafana:
-    image: grafana/grafana:11.2.0
-    restart: unless-stopped
-    ports:
-      - "${GRAFANA_PORT:-3001}:3000"
-    environment:
-      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER:-admin}
-      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-admin123}
-      GF_USERS_ALLOW_SIGN_UP: "false"
-      GF_USERS_DEFAULT_THEME: light
-      GF_SERVER_ROOT_URL: ${GRAFANA_ROOT_URL:-http://127.0.0.1:3001}
-      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /etc/grafana/provisioning/dashboards/json/overview.json
-    volumes:
-      - ./grafana/provisioning:/etc/grafana/provisioning:ro
-      - djkvm_grafana_data:/var/lib/grafana
-    depends_on:
-      - prometheus
-    mem_limit: 256m
 
 volumes:
   djkvm_db_data:
-  djkvm_backups:
-  djkvm_prometheus_data:
-  djkvm_grafana_data:
