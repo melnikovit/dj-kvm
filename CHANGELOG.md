@@ -1,10 +1,15 @@
-# Журнал изменений (Changelog) - dj-kvm
+# Журнал изменений (Changelog) - Платформа dj-*
 
 История релизов и обновлений контейнерных образов.
 
 ---
 
-### [dj-kvm] Версия 9e7ed141 (2026-08-14 20:16:35 UTC)
-- **Событие**: Сборка и публикация в Docker Hub (`melnikovit/dj-kvm`)
-- **Изменения**: Релиз 9e7ed141: ci: add downstream pipeline trigger for dj-all publishing
+### [all] Версия latest (2026-08-14 20:17:39 UTC)
+- **Событие**: Сборка и публикация в Docker Hub (`melnikovit/all`)
+- **Изменения**: Обновление документации
+
+
+### [all] Версия latest (2026-08-14 20:14:32 UTC)
+- **Событие**: Сборка и публикация в Docker Hub (`melnikovit/all`)
+- **Изменения**: Добавлен полноценный стек мониторинга (Prometheus, Grafana, file_sd, дашборды, .env.example)
 
