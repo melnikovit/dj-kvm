@@ -6,9 +6,9 @@
 
 ---
 
-### [dj-kvm] Версия 572e2e59 (2026-08-15 00:17:56 UTC)
+### [dj-kvm] Версия 7e446163 (2026-08-15 00:51:57 UTC)
 - **Событие**: Сборка и публикация в Docker Hub (`melnikovit/dj-kvm`)
-- **Изменения**: Релиз 572e2e59: feat: shell topbar, monitoring dashboards, Rel A–C gaps and optimizations
+- **Изменения**: Релиз 7e446163: fix: deploy core without restarting prometheus on busy :9090
 
 ### [0.1.0] - 2026-08-14
 #### Добавлено
