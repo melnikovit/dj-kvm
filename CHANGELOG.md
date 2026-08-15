@@ -6,6 +6,10 @@
 
 ---
 
+### [dj-kvm] Версия 572e2e59 (2026-08-15 00:17:56 UTC)
+- **Событие**: Сборка и публикация в Docker Hub (`melnikovit/dj-kvm`)
+- **Изменения**: Релиз 572e2e59: feat: shell topbar, monitoring dashboards, Rel A–C gaps and optimizations
+
 ### [0.1.0] - 2026-08-14
 #### Добавлено
 - **Мониторинг**: Полноценный стек мониторинга на базе Prometheus (v2.54.1) и Grafana (v11.2.0) в `docker-compose.yml`.
